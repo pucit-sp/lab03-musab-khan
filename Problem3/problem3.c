@@ -8,6 +8,9 @@
 #include<string.h>
 #include <stdlib.h>
 
+#define GREP 1
+#define REPLACE 2
+
 /*	
 **	This function take file pointer as paramter to read content from and 
 **	char pointer as an second argument which points to string to search in file
@@ -46,6 +49,7 @@ int  main(int argc,char *argv[])
 		}
 
 		behaviour = GREP;
+
 	}
 	else if(/*	check if the name of executable is myreplace	*/)
 	{
@@ -88,13 +92,22 @@ int  main(int argc,char *argv[])
 
 void mygrep(FILE *fp,char *find)
 {
-	char c1[500];
+	char c1 [500];
+	int infile_line_count = 0;
 
 	/*	Add code to get strings from file
 */ 
-	while(/*	read a string from file*/)
+	while(!feof(fp))
 	{
 		/*	Add your code here to search a string find on string c1 readed from file	*/
+
+		fgets(c1,sizeof (c1),fp);
+        infile_line_count++;
+
+		if(strstr(c1,find))
+		{
+           	printf("%d .%s\n" ,infile_line_count, c1);
+   		}
 	}
 }
 
@@ -106,15 +119,19 @@ void myreplace(FILE *fp,char *find, char * replace)
 {
 	char c1[500];
 	int flen = strlen(find);
+	FILE *temp = ("temp.txt", "w+");
 
 
-	while(/*	read a string from file*/)
+	while (!fgets (c1 , sizeof (c1) , fp ))
 	{
-		/*	Add your code here to search a string find on string c1 readed from file	
-*/
-		if(/*	found the string 	*/)
+		/*	Add your code here to search a string find on string c1 readed from file	*/
+
+		char *pos = NULL;
+		char *start = c1;
+
+		while (1)
 		{
-			/*	replace the finded string with replace string	*/
+			pos = strstr (c1 , find);
 		}
 	}
 
