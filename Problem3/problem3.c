@@ -40,7 +40,7 @@ int  main(int argc,char *argv[])
 
 	/*	check if mygrep is called or myreplace	
 */
-	if(/*	check if the name of executable is mygrep	*/ )
+	if(strcmp (argv[0] , "mygrep") == 0 || strcmp (argv[0] , "./mygrep") == 0)
 	{
 		if(argc != 3)
 		{
@@ -51,7 +51,7 @@ int  main(int argc,char *argv[])
 		behaviour = GREP;
 
 	}
-	else if(/*	check if the name of executable is myreplace	*/)
+	else if(strcmp (argv[0] , "myreplace") == 0 || strcmp (argv[0] , "./myreplace") == 0)
 	{
 		if(argc != 4)
 		{
@@ -117,25 +117,30 @@ void mygrep(FILE *fp,char *find)
 
 void myreplace(FILE *fp,char *find, char * replace)
 {
-	char c1[500];
+	char c1[500] , temp [500];
+	char *pos;
 	int flen = strlen(find);
-	FILE *temp = ("temp.txt", "w+");
+	FILE *fptrtemp = ("temp.txt", "w+");
+	int index = 0;
 
 
-	while (!fgets (c1 , sizeof (c1) , fp ))
+	while ((fgets (c1 , sizeof (c1) , fp )) != NULL)
 	{
 		/*	Add your code here to search a string find on string c1 readed from file	*/
 
-		char *pos = NULL;
-		char *start = c1;
-
-		while (1)
+		while ((pos = strstr (c1 , find)) != NULL)
 		{
-			pos = strstr (c1 , find);
+			strcpy (temp,find);
+			index = pos - c1;
+			c1 [index] = '\0';
+
+			strcat (c1 , replace);
+
+			strcat (c1 , temp + index + flen);
 		}
 	}
 
-
+	fputs (c1 , fptrtemp);
 
 }
 
